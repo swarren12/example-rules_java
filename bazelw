@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+MY_DIR=$(dirname $(readlink -f "$0"))
+
+BAZEL_INSTALL_DIR="$MY_DIR/.bazel"
+BAZELISK_BINARY="$BAZEL_INSTALL_DIR/bazelisk-linux-amd64"
+
+if [ ! -d "$BAZEL_INSTALL_DIR" ]
+then
+  mkdir -p "$BAZEL_INSTALL_DIR"
+fi
+
+if ! [ -f "$BAZELISK_BINARY" ]
+then
+  curl -LJ https://github.com/bazelbuild/bazelisk/releases/download/v1.18.0/bazelisk-linux-amd64 --output "$BAZELISK_BINARY" 2>/dev/null >/dev/null
+  chmod +x "$BAZELISK_BINARY"
+fi
+
+if ! [ -f "$BAZELISK_BINARY" ]
+then
+  echo 'Could not find the bazelisk binary!' >&2
+  exit 1
+fi
+
+$BAZELISK_BINARY $@

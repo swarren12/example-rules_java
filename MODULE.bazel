@@ -1,0 +1,4 @@
+## MODULE.bazel
+module(name = "example-project")
+
+bazel_dep(name = "rules_java", version = "7.0.6", dev_dependency = True)
